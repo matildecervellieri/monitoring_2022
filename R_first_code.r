@@ -38,6 +38,9 @@ matitable
 summary(matitable)
 
 # Marta does not like water
-# Marta wants 
+# Marta wants to get info only on fishes
+summary(matitable$fishes) 
+
+#histogram
 hist(matitable$fishes)
 hist(matitable$water)
