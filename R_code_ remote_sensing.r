@@ -66,6 +66,10 @@ plot(l2011$B1_sre, col=clb)
 
 # ----------------- day 3
 
+# plot the blue band using a blue colorRampPalette
+plot(l2011$B1_sre)
+clb <- colorRampPalette(c("dark blue", "blue", "light blue"))(100)
+plot(l2011$B1_sre, col=clb)
 
 
 
