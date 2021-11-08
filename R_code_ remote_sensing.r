@@ -71,6 +71,43 @@ plot(l2011$B1_sre)
 clb <- colorRampPalette(c("dark blue", "blue", "light blue"))(100)
 plot(l2011$B1_sre, col=clb)
 
+# multiframe
+par(mfrow=c(1,2))
 
+# plot the blue the band and the green besides, with different colorRampPalettes
+clg <- colorRampPalette(c("dark green", "green", "light green"))(100)
+par(mfrow=c(1,2))
+plot(l2011$B1_sre, col=clb)
+plot(l2011$B2_sre, col=clg)
+
+# Exercise: put the plots one on top of the other
+# invert the number of rows and the number of columns 
+par(mfrow=c(2,1))
+plot(l2011$B1_sre, col=clb)
+plot(l2011$B2_sre, col=clg)
+
+# Excercise: plot the first four bands with two rows and two columns 
+par(mfrow=c(2,2))
+plot(l2011$B1_sre, col=clb)
+plot(l2011$B2_sre, col=clg)
+clr <- colorRampPalette(c("dark red", "red", "pink"))(100)
+clnir <- colorRampPalette(c("red", "orange", "yellow"))(100)
+plot(l2011$B3_sre, col=clr)
+plot(l2011$B4_sre, col=clnir)
+
+# function to clean and close all the windows: it close the plotting device
+dev.off()
+
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") # natural colour
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin") # false colour
+# the red part is the forest, whilee the white part is the agricultural part of the land
+plotRGB(l2011, r=3, g=4, b=2, stretch="Lin") # the forest is green 
+plotRGB(l2011, r=3, g=2, b=4, stretch="Lin") # in yellow we can see the part of the forest which has been changed into agriculture
+
+par(mfrow=c(2,2))
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin") 
+plotRGB(l2011, r=3, g=4, b=2, stretch="Lin") 
+plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
 
 
