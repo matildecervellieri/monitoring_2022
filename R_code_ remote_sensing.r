@@ -100,7 +100,7 @@ dev.off()
 
 plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") # natural colour
 plotRGB(l2011, r=4, g=3, b=2, stretch="Lin") # false colour
-# the red part is the forest, whilee the white part is the agricultural part of the land
+# the red part is the forest, while the white part is the agricultural part of the land
 plotRGB(l2011, r=3, g=4, b=2, stretch="Lin") # the forest is green 
 plotRGB(l2011, r=3, g=2, b=4, stretch="Lin") # in yellow we can see the part of the forest which has been changed into agriculture
 
@@ -109,5 +109,23 @@ plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")
 plotRGB(l2011, r=4, g=3, b=2, stretch="Lin") 
 plotRGB(l2011, r=3, g=4, b=2, stretch="Lin") 
 plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
+
+# --------------- day 4 final day on this tropical forest reserve 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin") # false colour -> the stretch is to improve the range for reflection to 0 to 1, so we can view better 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Hist") # it enhanced the extremes part so we can view beetter the differences 
+
+# now we are importing in R the version of 1988. Remember to use quotes 
+l1988 <- brick("p224r63_1988.grd")
+l1988
+
+par(mfrow=c(2,1))
+plotRGB(l1988, r=4, g=3, b=2, stretch="Lin")
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
+# in 1988 the forest was there, theey were just building some houses, but in 2011 thee situation is dramatic, there are agricultural fields and the forest is becoming smaller in such a little time 
+
+# Put the NIR in the blue channel 
+par(mfrow=c(2,1))
+plotRGB(l1988, r=2, g=3, b=4, stretch="Lin")
+plotRGB(l2011, r=2, g=3, b=4, stretch="Lin")
 
 
