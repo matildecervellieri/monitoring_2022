@@ -81,6 +81,12 @@ plotRGB(en, r=1, g=7, b=13, stretch="lin")
 # industries of Madrid are in the Northern part
 # red in the northern EU: high NO2 in January and then it stopped: geophysical reasons 
 
+# difference
+
+# pairs
+paird(en)
+
+# direct import 
 
 
 
