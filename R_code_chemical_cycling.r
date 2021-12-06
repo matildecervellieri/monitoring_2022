@@ -81,7 +81,43 @@ plotRGB(en, r=1, g=7, b=13, stretch="lin")
 # industries of Madrid are in the Northern part
 # red in the northern EU: high NO2 in January and then it stopped: geophysical reasons 
 
-# difference
+# ------ day 2
+library(raster)
+
+# set working directory 
+setwd("/Users/matildecervellieri/lab/en/")
+
+# we're gonna use the lapply function to apply a function over a list or a vector
+# first we need to make the list, explaining to the software what are the images we want to import
+rlist <- list.files(pattern="EN") # we use the common part of the names of the images, so EN -> we store it with the arrow to assign it to an object
+rlist
+
+# lapply applies a function over a list 
+list_rast <- lapply(rlist, raster) 
+list_rast  
+# we created a list, importing all of the images together
+
+# now we need a function to stack all the elements together. We build the stack with the list that we made
+en_stack <- stack(list_rast)
+en_stack
+
+cl <- colorRampPalette(c("red","orange","yellow"))(100)
+plot(en_stack, col=cl)
+# we are at the same point of the previous lesson but in a much easier way
+
+# excercise: plot only the first image of the stack 
+plot(en_stack$EN_0001, col=cl)
+
+# difference between the final image and the first image 
+en_dif <- en_stack$EN_0001 - en_stack$EN_0013 
+cldif <- colorRampPalette(c("blue", "white", "red"))(100)
+plot(en_dif, col=cldif)
+# red parts are big change, while the blue parts are mantaining the amount of NO2
+
+# automated processing source function. to run a code which is stored in our pc or that stays in the web
+# we will save a script in our computer and run directly in R
+dev.off()
+source("R_code_automatic_script.txt")
 
 # pairs
 paird(en)
