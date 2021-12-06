@@ -80,9 +80,4 @@ plot(dvi2006, col=cl)
 plot(dvidif, col=cld)
 dev.off()
 
-# day 3
-install.packages("ggplot2") # for new graphical properties
-install.packages("gridExtra") # for new multiframe properties
-install.packages("ncdf4") # for managing Copernicus data
-install.packages("RStoolbox")
 
