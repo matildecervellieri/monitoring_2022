@@ -76,7 +76,7 @@ proportion1992 <- data.frame(cover, prop1992)
 proportion1992 # this are the real proportion of forest and agriculture: quantitative values 
 
 # we are gonna use the ggplot function. We want to use histograms (geom_bar function with the statistic values, so the actual ones. Fill is the colour inside the bar)
-ggplot(proportion1992, aes(x=cover, y=prop1992, color=cover)) + geom_bar(stat="identity", fill="white")
+ggplot(proportion1992, aes(x=cover, y=prop1992, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1)
 # we got an histogram with the actual quantitative values of forest and agriculture
 # we are gonna do the same with the image of 2006 and see what changed quantitatively 
 
@@ -123,7 +123,7 @@ proportion # we have the new dataframe with the column of 2006
 # 2 Agriculture 0.1043886 0.4785047
 
 # plot the proportion of 2006
-ggplot(proportion, aes(x=cover, y=prop2006, color=cover)) + geom_bar(stat="identity", fill="white")
+ggplot(proportion, aes(x=cover, y=prop2006, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1)
 
 # plot eeverything all together using a package called gridExtra
 # p1 <- ggplot(proportion1992, aes(x=cover, y=prop1992, color=cover)) + geom_bar(stat="identity", fill="white")
