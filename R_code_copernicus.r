@@ -41,4 +41,3 @@ ggplot() + geom_raster(snow20211214, mapping = aes(x=x, y=y, fill= Snow.Cover.Ex
 # we can put names
 ggplot() + geom_raster(snow20211214, mapping = aes(x=x, y=y, fill= Snow.Cover.Extent)) + scale_fill_viridis(option="cividis") + ggtitle("cividis palette”)
 
-# now we are going to download another image of the same set. We download the image of the 29th of August
