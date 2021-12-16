@@ -18,5 +18,11 @@ snow20211214 # snow cover extent (sce)
 # plot of this data 
 plot(snow20211214) # higher values in the northern part in green 
 
+# we are plotting it with a new color
+cl <- colorRampPalette(c("dark blue", "blue", "light blue"))(100)
+plot(snow20211214, col=cl)
+# Quite nice image. We can zoom 
+
+# We will use viridis: the viridis palette is useful for colorblind people because they can discriminate between minimum and maximum
 
 
