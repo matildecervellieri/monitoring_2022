@@ -136,4 +136,40 @@ grid.arrange(p1, p2, nrow=1)
 # in 2006 both classes have more or less the same values: forest passed from 90% to the 50% of the landscape, while agricultural areas pass from 10% to 50% of the total landscape 
 # agricultural parts are rising up, while there is a lot of deforestation 
 
+# or with patchwork package:
+# install.packages("patchwork")
+library(patchwork)
+
+p1+p2
+# if you want to put one graph on top of the other:
+p1/p2
+
+# patchworkn is working even with raster data, but they should be plotted with the ggplot2 package
+# instead of using plotRGB we are going to use ggRGB
+# Common stuff:
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+
+# we're using ggRGB with different stretch
+ggRGB(l1992, r=1, g=2, b=3)
+ggRGB(l1992, r=1, g=2, b=3, stretch="lin")
+ggRGB(l1992, r=1, g=2, b=3, stretch="hist") # hard stretch: is showing additional infos. We can see horizontal lines because is not a photo, is an image. 
+ggRGB(l1992, r=1, g=2, b=3, stretch="sqrt") 
+ggRGB(l1992, r=1, g=2, b=3, stretch="log") # is natural logarithm. 
+
+# patchwork: we can see all the graphs together. First we need to assign them to an object
+gp1 <- ggRGB(l1992, r=1, g=2, b=3, stretch="lin")
+gp2 <- ggRGB(l1992, r=1, g=2, b=3, stretch="hist")
+gp3 <- ggRGB(l1992, r=1, g=2, b=3, stretch="sqrt")
+gp4 <- ggRGB(l1992, r=1, g=2, b=3, stretch="log") 
+
+gp1 + gp2 + gp3 + gp4
+
+# multitemporal patchwork
+gp1 <- ggRGB(l1992, r=1, g=2, b=3)
+gp5 <- ggRGB(l2006, r=1, g=2, b=3)
+
+gp1 + gp5
+gp1 / gp5
+
+# par, stack, grid.arrange, patchwork: we used them to plot different images or graphs together
 
