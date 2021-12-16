@@ -1,6 +1,5 @@
 # R code for uploading and visualizing Coprnicus data in R
 
-# install.packages("ncdf4")
 library(ncdf4)
 library(raster)
 library(RStoolbox)
