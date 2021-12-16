@@ -130,6 +130,7 @@ p1 <- ggplot(proportion1992, aes(x=cover, y=prop1992, color=cover)) + geom_bar(s
 p2 <- ggplot(proportion, aes(x=cover, y=prop2006, color=cover)) + geom_bar(stat="identity", fill="white")
 
 grid.arrange(p1, p2, nrow=1)
+# + ylim(0,100)
 
 # in 1992 the forest part is huge in respect to the agricultural part: 90% of landscape is forest 
 # in 2006 both classes have more or less the same values: forest passed from 90% to the 50% of the landscape, while agricultural areas pass from 10% to 50% of the total landscape 
