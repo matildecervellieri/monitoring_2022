@@ -82,7 +82,7 @@ p1 / p2
 # latitude from 30 to 50
 # crop the stack to the extent of Sicily
 ext <- c(0, 20, 30, 50)
-# stack_cropped <- crop(snowstack, ext) # this will crop the whole srack, and 
+# stack_cropped <- crop(snowstack, ext) # this will crop the whole srack, and then single variables (layers) can be extracted
 ssummer_cropped <- crop(ssummer, ext)
 swinter_cropped <- crop(swinter, ext)
 
