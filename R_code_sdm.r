@@ -1,4 +1,4 @@
-# R code for species distribution modelling, namely the distribution of individuals in space 
+# R code for species distribution modelling, namely the distribution of individuals of a population in space 
 
 # install.packages("sdm")
 library(sdm)
