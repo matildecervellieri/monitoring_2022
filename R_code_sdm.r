@@ -87,5 +87,29 @@ points(presences, pch=19)
 # intermediate precipitation is linked with the presence of the specie
 
 
+# ------------- day 2 
+
+# importing the source script: we saved the link from Virtuale to the lab folder to import all the previous code
+# first we need to set the working directory
+setwd("/Users/matildecervellieri/lab/")
+source("R_code_source_sdm.r")
+
+# in the theoretical slide of SDMs we should use individuals of a species and predictors
+# the species shapefile is also called training data
+preds
+# these are the predictors: elevation, precipitation, temperature, vegetation 
+# explanatory variables is the other name to call the predictors 
+
+# species ditribution model 
+# we're building the model and then we will have the map 
+
+# Set the data for the sdm
+# Let's explain to the model what are the training and predictors data
+datasdm <- sdmData(train=species, predictors=preds)
+datasdm # features are the predictors, type of data is presence/absence (it may happens that we have abbundances, which means that is specified the amount of individuals of the species)
+
+# SDM
+m1 <- sdm(Occurrence~temperature+elevation+precipitation+vegetation, data=datasdm, methods="glm") # Occurrence is the y-variable, while the temperature is the x-variable. We sum the others because we have 4 variables as predictors
+m1 
 
 
