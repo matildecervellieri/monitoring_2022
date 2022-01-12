@@ -109,7 +109,29 @@ datasdm <- sdmData(train=species, predictors=preds)
 datasdm # features are the predictors, type of data is presence/absence (it may happens that we have abbundances, which means that is specified the amount of individuals of the species)
 
 # SDM
+# generalised linear model = glm
 m1 <- sdm(Occurrence~temperature+elevation+precipitation+vegetation, data=datasdm, methods="glm") # Occurrence is the y-variable, while the temperature is the x-variable. We sum the others because we have 4 variables as predictors
 m1 
 
+# ------- day 3
+# the final probability to find the specie is the calculation of the formula: intercept + each slope multiplied with each predictor
+# if we made a model, we can make a prediction
+# make the raster output layer in order to calculate the probability of finding the specie in one unknown point 
+p1 <- predict(m1, newdata=preds) # p1 is the map probability
+p1 # is a RasterLayer 
 
+# we are going to plot this prediction: we already used the colorRampPalette cl 
+plot(p1, col=cl)
+points(presences, pch=19) # pch is any kind of point character type
+# the prediction is quite good: points are in the areas in which there is an higher probability
+# in the eastern part there is low probability in blue, but there are points: not a good prediction but this happens because it could be that there are other preedictors explaining the probability to find the specie and we didn't use them
+
+# stack everything all together 
+s1 <- stack(preds, p1)
+plot(s1, col=cl) 
+# we can see each predictor and the final map 
+
+# let's change the names all together 
+names(s1) <- c("Elevation", "Precipitation", "Temperature", "Vegetation", "Probability")
+plot(s1, col=cl)
+# the names have been changed 
