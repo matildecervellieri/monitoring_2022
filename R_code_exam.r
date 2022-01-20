@@ -21,7 +21,7 @@ albedo <- stack(albedo_import)
 albedo
 
 # Let's change their names
-names(albedo) <- c("albedo_1999", "albedo_2004", "albedo_2009", "albedo_2014", "albedo_2019")
+names(albedo) <- c("albedo_1999", "albedo_2009", "albedo_2019")
 names(albedo)
 albedo
 
@@ -32,17 +32,13 @@ albedo_cropped
 
 # Let's associate it to an object
 albedo1999 <- albedo_cropped$albedo_1999
-albedo2004 <- albedo_cropped$albedo_2004
 albedo2009 <- albedo_cropped$albedo_2009
-albedo2014 <- albedo_cropped$albedo_2014
 albedo2019 <- albedo_cropped$albedo_2019
 
 # let's plot them using cividis palette
 a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_1999)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 1999")
-a2 <- ggplot() + geom_raster(albedo2004, mapping = aes(x=x, y=y, fill= albedo_2004)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2004")
-a3 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2009")
-a4 <- ggplot() + geom_raster(albedo2014, mapping = aes(x=x, y=y, fill= albedo_2014)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2014")
-a5 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
+a2 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2009")
+a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
 
-a1 + a2 + a3 + a4 + a5
+a1 / a2 / a3
 
