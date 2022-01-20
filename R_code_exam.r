@@ -42,7 +42,7 @@ a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_19
 a2 <- ggplot() + geom_raster(albedo2004, mapping = aes(x=x, y=y, fill= albedo_2004)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2004")
 a3 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2009")
 a4 <- ggplot() + geom_raster(albedo2014, mapping = aes(x=x, y=y, fill= albedo_2014)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2014")
-a5 <-ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
+a5 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
 
 a1 + a2 + a3 + a4 + a5
 
