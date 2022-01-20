@@ -10,29 +10,39 @@ library(gridExtra)
 setwd("/Users/matildecervellieri/lab/exam/")
 
 # importing files: first we make a list and then use the lapply function 
-lst_list <- list.files(pattern="LST")
-lst_list
+albedo_list <- list.files(pattern="ALDH")
+albedo_list
 
-lst_import <- lapply(lst_list, raster)
-lst_import # 3 files imported inside r. 
+albedo_import <- lapply(albedo_list, raster)
+albedo_import # 3 files imported inside r
 
 # stacking them all together
-lst <- stack(lst_import)
-lst
+albedo <- stack(albedo_import)
+albedo
 
 # Let's change their names
-names(lst) <- c("lst_2010", "lst_2015", "lst_2020")
-names(lst)
-lst
+names(albedo) <- c("albedo_1999", "albedo_2004", "albedo_2009", "albedo_2014", "albedo_2019")
+names(albedo)
+albedo
+
+# cropping the images
+ext <- c(3, 18, 43, 49)
+albedo_cropped <- crop(albedo, ext)
+albedo_cropped
 
 # Let's associate it to an object
-lst2010 <- lst$lst_2010
-lst2015 <- lst$lst_2015
-lst2020 <- lst$lst_2020
+albedo1999 <- albedo_cropped$albedo_1999
+albedo2004 <- albedo_cropped$albedo_2004
+albedo2009 <- albedo_cropped$albedo_2009
+albedo2014 <- albedo_cropped$albedo_2014
+albedo2019 <- albedo_cropped$albedo_2019
 
-cl <- colorRampPalette(c("blue", "light blue", "pink", "yellow"))(100)
-plot(lst2010, col=cl) 
+# let's plot them using cividis palette
+a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_1999)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 1999")
+a2 <- ggplot() + geom_raster(albedo2004, mapping = aes(x=x, y=y, fill= albedo_2004)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2004")
+a3 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2009")
+a4 <- ggplot() + geom_raster(albedo2014, mapping = aes(x=x, y=y, fill= albedo_2014)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2014")
+a5 <-ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
 
-ext <- c(40, 60, 30, 50)
-lst2010_cropped <- crop(lst2010, ext)
-plot(lst2010_cropped, col=cl) 
+a1 + a2 + a3 + a4 + a5
+
