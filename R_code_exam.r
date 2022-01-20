@@ -10,7 +10,7 @@ library(gridExtra)
 setwd("/Users/matildecervellieri/lab/exam/")
 
 # importing files: first we make a list and then use the lapply function 
-albedo_list <- list.files(pattern="ALDH")
+albedo_list <- list.files(pattern="ALBH")
 albedo_list
 
 albedo_import <- lapply(albedo_list, raster)
