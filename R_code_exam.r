@@ -9,7 +9,8 @@ library(gridExtra)
 # Set the working directory
 setwd("/Users/matildecervellieri/lab/exam/")
 
-# importing files: first we make a list and then use the lapply function 
+# Prediction of the alpine glacier retreat using albedo as an indicator of glacier presence 
+# importing dark-sky albedo files: first we make a list and then use the lapply function 
 albedo_list <- list.files(pattern="ALBH")
 albedo_list
 
@@ -25,12 +26,12 @@ names(albedo) <- c("albedo_1999", "albedo_2009", "albedo_2019")
 names(albedo)
 albedo
 
-# cropping the images
+# cropping the images: focusing on the Alps
 ext <- c(3, 18, 43, 49)
 albedo_cropped <- crop(albedo, ext)
 albedo_cropped
 
-# Let's associate it to an object
+# Let's associate them to an object
 albedo1999 <- albedo_cropped$albedo_1999
 albedo2009 <- albedo_cropped$albedo_2009
 albedo2019 <- albedo_cropped$albedo_2019
@@ -40,5 +41,6 @@ a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_19
 a2 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2009")
 a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Glaciers in 2019")
 
+# plotting them together to see the changes in the amount of ice over the years: 1999 vs 2009 vs 2019
 a1 / a2 / a3
 
