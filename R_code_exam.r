@@ -80,5 +80,12 @@ plot(fcover1999)
 plot(fcover2009)
 plot(fcover2019)
 
+# Let's save the results 
+pdf("forest")
+par(mfrow=c(1,3))
+plot(fcover1999)
+plot(fcover2009)
+plot(fcover2019)
+dev.off()
 
 
