@@ -30,8 +30,8 @@ names(albedo)
 albedo
 
 # cropping the images: focusing on the Alps
-ext <- c(3, 18, 43, 49)
-albedo_cropped <- crop(albedo, ext)
+ext_alps <- c(3, 18, 43, 49)
+albedo_cropped <- crop(albedo, ext_alps)
 albedo_cropped
 
 # Let's associate them to an object
@@ -55,6 +55,30 @@ dev.off()
 
 # ---------- part 2: envestigate in a deeper way the recent changes in the amount of ice and snow using SCE (snow cover extent)
 # yearly changes from 2017 to 2021: always using detections made in the summer season (Sept. 2)
+
+fcover_list <- list.files(pattern="FCOVER")
+fcover_list
+
+fcover_import <- lapply(fcover_list, raster)
+fcover_import # 3 files imported inside r
+
+# stacking them all together
+fcover <- stack(fcover_import)
+fcover
+
+# cropping the images: Italy
+ext_italy <- c(3, 20, 35, 49)
+fcover_cropped <- crop(fcover, ext_italy)
+fcover_cropped
+
+fcover1999 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.1
+fcover2009 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.2
+fcover2019 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.3
+
+par(mfrow=c(1,3))
+plot(fcover1999)
+plot(fcover2009)
+plot(fcover2019)
 
 
 
