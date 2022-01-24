@@ -89,3 +89,20 @@ plot(fcover2019)
 dev.off()
 
 
+# part 3: 
+ndvi_list <- list.files(pattern="NDVI")
+ndvi_list
+
+ndvi_import <- lapply(ndvi_list, brick)
+ndvi_import # 3 files imported inside r
+
+# stacking them all together
+ndvi <- stack(ndvi_import)
+ndvi
+
+# cropping the images: Italy
+ext_italy <- c(3, 20, 35, 49)
+ndvi_cropped <- crop(ndvi, ext_italy)
+ndvi_cropped
+
+plot(ndvi_cropped)
