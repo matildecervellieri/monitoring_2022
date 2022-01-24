@@ -48,34 +48,13 @@ a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_20
 a1 / a2 / a3
 
 # Let's save the results 
+pdf("albedo")
+grid.arrange(a1, a2, a3, nrow=3)
+dev.off()
+
 
 # ---------- part 2: envestigate in a deeper way the recent changes in the amount of ice and snow using SCE (snow cover extent)
 # yearly changes from 2017 to 2021: always using detections made in the summer season (Sept. 2)
 
-# importing the SCE files: first we make a list and then use the lapply function
-sce_list <- list.files(pattern="SCE")
-sce_list
 
-sce_import <- lapply(sce_list, raster)
-sce_import # 3 files imported inside r
-
-# stacking them all together
-sce <- stack(sce_import)
-sce
-
-# Let's change their names
-names(sce) <- c("Snow.Cover.Extent.2017", "Snow.Cover.Extent.2018", "Snow.Cover.Extent.2019", "Snow.Cover.Extent.2020", "Snow.Cover.Extent.2021")
-names(sce)
-sce
-
-# cropping the images using the previous coordinates
-sce_cropped <- crop(sce, ext)
-sce_cropped
-
-# Let's associate them to an object
-sce2017 <- sce_cropped$Snow.Cover.Extent.2017
-sce2018 <- sce_cropped$Snow.Cover.Extent.2018
-sce2019 <- sce_cropped$Snow.Cover.Extent.2019
-sce2020 <- sce_cropped$Snow.Cover.Extent.2020
-sce2021 <- sce_cropped$Snow.Cover.Extent.2021
 
