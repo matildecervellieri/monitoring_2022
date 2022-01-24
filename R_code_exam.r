@@ -76,16 +76,16 @@ fcover2009 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.2
 fcover2019 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.3
 
 par(mfrow=c(1,3))
-plot(fcover1999)
-plot(fcover2009)
-plot(fcover2019)
+plot(fcover1999, main="Forest cover 1999")
+plot(fcover2009, main="Forest cover 2009")
+plot(fcover2019, main="Forest cover 2019")
 
 # Let's save the results 
 pdf("forest")
 par(mfrow=c(1,3))
-plot(fcover1999)
-plot(fcover2009)
-plot(fcover2019)
+plot(fcover1999, main="Forest cover 1999")
+plot(fcover2009, main="Forest cover 2009")
+plot(fcover2019, main="Forest cover 2019")
 dev.off()
 
 # let's make a quantative analysis 
