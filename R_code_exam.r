@@ -14,7 +14,7 @@ setwd("/Users/matildecervellieri/lab/exam/")
 # In particular, the detections were made in the period August-September: high albedo values indicate permanent snow and ice, thus avoiding the snow cover of the winter months 
 
 # importing dark-sky albedo files: first we make a list and then use the lapply function 
-albedo_list <- list.files(pattern="ALBH")
+albedo_list <- list.files(pattern="ALDH")
 albedo_list
 
 albedo_import <- lapply(albedo_list, raster)
