@@ -41,9 +41,9 @@ albedo2009 <- albedo_cropped$albedo_2009
 albedo2019 <- albedo_cropped$albedo_2019
 
 # let's plot them using cividis palette
-a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_1999)) + scale_fill_viridis(option="cividis") + ggtitle("Alps's glaciers in 1999")
-a2 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis") + ggtitle("Alps's glaciers in 2009")
-a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis") + ggtitle("Alps's glaciers in 2019")
+a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_1999)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 1999")
+a2 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2009")
+a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2019")
 
 # plotting them together to see the changes in the amount of ice and snow over the years: 1999 vs 2009 vs 2019
 a1 / a2 / a3
@@ -102,14 +102,14 @@ fcover1999c <- unsuperClass(fcover1999, nClasses=2) # unsuperClass(x, nClasses)
 fcover1999c 
 
 plot(fcover1999c$map)
-# value 1 = forest
-# value 2 = agricultural areas and water
+# value 1 = agricultural areas and water in white
+# value 2 = forest in green
 
 # now I want to know the percentage of forest and the percentage of agricultural areas
 # the function freq is doing the job, it calculates the number of pixel of forest and agricultural areas
 freq(fcover1999c$map) 
-# forest (class 1) = 305665
-# agricultural areas and water (class 2) = 35627
+# agricultural areas and water (class 1) = 332321
+# forest (class 2) = 471887
 
 # let's make the proportion
 total1999 <- 471887 + 332321
@@ -125,7 +125,7 @@ prop1999 <- c(propforest1999, propagri1999)
 proportion1999 <- data.frame(cover, prop1999)
 proportion1999 # this are the real proportion of forest and agriculture: quantitative values 
 
-# we are gonna use the ggplot function. We want to use histograms (geom_bar function with the statistic values, so the actual ones. Fill is the colour inside the bar)
+# we are gonna use the ggplot function. We want to use histograms
 ggplot(proportion1999, aes(x=cover, y=prop1999, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 1999")
 
 
@@ -134,14 +134,13 @@ fcover2019c <- unsuperClass(fcover2019, nClasses=2) # unsuperClass(x, nClasses)
 fcover2019c 
 
 plot(fcover2019c$map)
-# value 1 = forest
-# value 2 = agricultural areas and water
+# value 1 = forest in white
+# value 2 = agricultural areas and water in green 
 
-# now I want to know the percentage of forest and the percentage of agricultural areas
-# the function freq is doing the job, it calculates the number of pixel of forest and agricultural areas
+# percentage of forest and the percentage of agricultural areas
 freq(fcover2019c$map) 
-# forest (class 1) = 305665
-# agricultural areas and water (class 2) = 35627
+# forest (class 1) = 437644
+# agricultural areas and water (class 2) = 366564
 
 # let's make the proportion
 total2019 <- 437644 + 366564
@@ -157,10 +156,10 @@ prop2019 <- c(propforest2019, propagri2019)
 proportion2019 <- data.frame(cover, prop2019)
 proportion2019 # this are the real proportion of forest and agriculture: quantitative values 
 
-# we are gonna use the ggplot function. We want to use histograms (geom_bar function with the statistic values, so the actual ones. Fill is the colour inside the bar)
+# we are gonna use the ggplot function. We want to use histograms 
 ggplot(proportion2019, aes(x=cover, y=prop2019, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 2019")
 
-# plotting the differences
+# plotting the differences between 1999 conditions and 2019 contitions
 fdif <- fcover1999c$map - fcover2019c$map
 cl <- colorRampPalette(c("tan3", "yellow", "forest green"))(100)
 plot(fdif, col=cl) # yellow parts are the area in which forest has been lost, while green indicates the continuos presence of forest and brown the unchanged agricultural zones
@@ -175,10 +174,30 @@ dev.off()
 
 g1 <- ggplot(proportion1999, aes(x=cover, y=prop1999, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 1999")
 g2 <- ggplot(proportion2019, aes(x=cover, y=prop2019, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 2019")
+
 pdf("quantitative forest difference graph.pdf")
 g1 + g2
 dev.off()
 
 
 # part 3: 
+lst_list <- list.files(pattern="LST")
+lst_list
+
+lst_import <- lapply(lst_list, raster)
+lst_import 
+
+# stacking them all together
+lst <- stack(lst_import)
+lst
+
+# Let's change their names
+names(lst) <- c("lst_2017", "lst_2018", "lst_2019", "lst_2020")
+names(lst)
+lst
+
+# cropping the files: focusing on Italy
+lst_cropped <- crop(lst, ext_italy)
+lst_cropped
+
 
