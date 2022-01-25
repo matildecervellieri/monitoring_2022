@@ -18,7 +18,7 @@ setwd("/Users/matildecervellieri/lab/exam/")
 albedo_list <- list.files(pattern="ALDH")
 albedo_list
 
-albedo_import <- lapply(albedo_list, raster)
+albedo_import <- lapply(albedo_list, brick, varname="AL_DH_BB")
 albedo_import # 3 files imported inside r
 
 # stacking them all together
@@ -65,7 +65,7 @@ dev.off()
 fcover_list <- list.files(pattern="FCOVER")
 fcover_list
 
-fcover_import <- lapply(fcover_list, raster)
+fcover_import <- lapply(fcover_list, brick, varname="FCOVER") # same as doing fcover_import <- lapply(fcover_list, raster) because the first layer is FCOVER
 fcover_import # 3 files imported inside r
 
 # stacking them all together
@@ -181,23 +181,25 @@ dev.off()
 
 
 # part 3: 
-lst_list <- list.files(pattern="LST")
-lst_list
+swi_list <- list.files(pattern="SWI")
+swi_list
 
-lst_import <- lapply(lst_list, raster)
-lst_import 
+swi_import <- lapply(swi_list, brick, varname="SWI_005")
+swi_import 
 
 # stacking them all together
-lst <- stack(lst_import)
-lst
+swi <- stack(swi_import)
+swi
 
 # Let's change their names
-names(lst) <- c("lst_2017", "lst_2018", "lst_2019", "lst_2020")
-names(lst)
-lst
+names(swi) <- c("swi_2015", "swi_2016", "swi_2017", "lst_2018", "lst_2019", "lst_2020", "swi_2021")
+names(swi)
+swi
 
 # cropping the files: focusing on Italy
-lst_cropped <- crop(lst, ext_italy)
-lst_cropped
+swi_cropped <- crop(swi, ext_italy)
+swi_cropped
 
+cls <- colorRampPalette(c("tan3", "yellow2", "light blue", "blue"))(100)
+plot(swi_cropped, col=cls)
 
