@@ -19,7 +19,7 @@ albedo_list <- list.files(pattern="ALDH")
 albedo_list
 
 albedo_import <- lapply(albedo_list, brick, varname="AL_DH_BB")
-albedo_import # 3 files imported inside r
+albedo_import
 
 # stacking them all together
 albedo <- stack(albedo_import)
@@ -199,25 +199,38 @@ dev.off()
 
 # ------------ part 3: changes during the years in the thropic state index (layer of Lake Water Quality dataset from Copernicus Global Land Service) of Northern Italy lakes 
 # Comparison between the lakes trophic conditions of the years 2004, 2008, 2012, 2016, 2020
-swi_list <- list.files(pattern="SWI")
-swi_list
+# TSI from 0 to 100
 
-swi_import <- lapply(swi_list, brick, varname="SWI_005")
-swi_import 
+lwq_list <- list.files(pattern="LWQ")
+lwq_list
+
+lwq_import <- lapply(lwq_list, brick, varname="trophic_state_index")
+lwq_import
 
 # stacking them all together
-swi <- stack(swi_import)
-swi
+lwq <- stack(lwq_import)
+lwq
 
 # Let's change their names
-names(swi) <- c("swi_2015", "swi_2016", "swi_2017", "lst_2018", "lst_2019", "lst_2020", "swi_2021")
-names(swi)
-swi
+names(lwq) <- c("lwq_2004", "lwq_2008", "lwq_2012", "lwq_2016", "lwq_2020")
+names(lwq)
+lwq
 
-# cropping the files: focusing on Italy
-swi_cropped <- crop(swi, ext_italy)
-swi_cropped
+# cropping the images: focusing on the Alps
+ext_alps_zoom <- c(8, 11.5, 45, 46.5)
+lwq_cropped <- crop(lwq, ext_alps_zoom)
+lwq_cropped
 
-cls <- colorRampPalette(c("tan3", "yellow2", "light blue", "blue"))(100)
-plot(swi_cropped, col=cls)
+plot(lwq_cropped)
 
+# oligotrophic (TSI 0–40, having the least amount of biological productivity, "good" water quality)
+# mesotrophic (TSI 40–60, having a moderate level of biological productivity, "fair" water quality)
+# eutrophic to hypereutrophic (TSI 60–100, having the highest amount of biological productivity, "poor" water quality)
+
+l1 <- ggplot() + geom_raster(lwq_cropped$lwq_2004, mapping = aes(x=x, y=y, fill= lwq_2004)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 1999")
+l2 <- ggplot() + geom_raster(lwq_cropped$lwq_2008, mapping = aes(x=x, y=y, fill= lwq_2008)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2009")
+l3 <- ggplot() + geom_raster(lwq_cropped$lwq_2012, mapping = aes(x=x, y=y, fill= lwq_2012)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2019")
+l4 <- ggplot() + geom_raster(lwq_cropped$lwq_2016, mapping = aes(x=x, y=y, fill= lwq_2016)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 1999")
+l5 <- ggplot() + geom_raster(lwq_cropped$lwq_2020, mapping = aes(x=x, y=y, fill= lwq_2020)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2009")
+
+l1 + l2 + l3 + l4 + l5
