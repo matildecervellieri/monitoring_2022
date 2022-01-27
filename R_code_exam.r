@@ -72,11 +72,6 @@ pdf("albedo.pdf")
 grid.arrange(a1, a2, a3, a4, a5, a6, ncol=2, nrow=3)
 dev.off()
 
-png("albedo.png", 
-    width = 1500, height = 2000)
-grid.arrange(a1, a2, a3, a4, a5, a6, ncol=2, nrow=3))
-dev.off()
-
 png("_albedo_difference.png", 
     width = 1500, height = 2000)
 plot(adif, col=acl, main="difference between 1999 and 2019 ice conditions in the Alps")
