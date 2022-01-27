@@ -34,7 +34,7 @@ names(albedo) <- c("albedo_1999", "albedo_2003", "albedo_2007", "albedo_2011", "
 names(albedo)
 albedo
 
-# cropping the images: focusing on the Alps
+# cropping the data: focusing on the Alps
 ext_alps <- c(3, 18, 43, 49)
 albedo_cropped <- crop(albedo, ext_alps)
 albedo_cropped
@@ -81,7 +81,7 @@ dev.off()
 # ---------- part 2: changes over the years in the Italian forest area using the Forest Cover data from Copernicus Global Land Service
 # ten years changes: 1999 vs 2009 vs 2019
 
-# importing the FCOVER data
+# importing the FCOVER data: first we make a list and then use the lapply function
 fcover_list <- list.files(pattern="FCOVER")
 fcover_list
 
@@ -92,7 +92,7 @@ fcover_import # 5 files imported inside r
 fcover <- stack(fcover_import)
 fcover
 
-# cropping the images: Italy
+# cropping the data: Italy
 ext_italy <- c(6, 19.5, 36.5, 47)
 fcover_cropped <- crop(fcover, ext_italy)
 fcover_cropped
@@ -212,8 +212,14 @@ dev.off()
 
 # ------------ part 3: changes during the years in the thropic state index (layer of Lake Water Quality dataset from Copernicus Global Land Service) of Northern Italy lakes 
 # Comparison between the lakes trophic conditions of the years 2004, 2008, 2012, 2016, 2020
-# TSI from 0 to 100
 
+# TSI from 0 to 100:
+
+# oligotrophic (TSI 0–40, having the least amount of biological productivity, "good" water quality)
+# mesotrophic (TSI 40–60, having a moderate level of biological productivity, "fair" water quality)
+# eutrophic to hypereutrophic (TSI 60–100, having the highest amount of biological productivity, "poor" water quality)
+
+# importing the Lake Water Quality data: first we make a list and then use the lapply function 
 lwq_list <- list.files(pattern="LWQ")
 lwq_list
 
@@ -229,21 +235,52 @@ names(lwq) <- c("lwq_2004", "lwq_2008", "lwq_2012", "lwq_2016", "lwq_2020")
 names(lwq)
 lwq
 
-# cropping the images: focusing on the Alps
+# cropping the data: focusing on the Lombardy's basin
 ext_alps_zoom <- c(8.2, 11.2, 45.4, 46.2)
 lwq_cropped <- crop(lwq, ext_alps_zoom)
 lwq_cropped
 
-plot(lwq_cropped)
+# plotting the data dividing by colour the three trophic categories: 
+# oligotrophic (TSI 0–40, "good" water quality): light blue/green 
+# mesotrophic (TSI 40–60, "fair" water quality): orange
+# eutrophic to hypereutrophic (TSI 60–100, "poor" water quality): red/dark red 
+l1 <- ggplot() + geom_raster(lwq_cropped$lwq_2004, mapping = aes(x=x, y=y, fill= lwq_2004)) + scale_fill_viridis(option="turbo", limits=c(0, 100), breaks=c(0, 40, 60, 100), begin=0.3, end=1) + ggtitle("TSI 2004")
+l2 <- ggplot() + geom_raster(lwq_cropped$lwq_2008, mapping = aes(x=x, y=y, fill= lwq_2008)) + scale_fill_viridis(option="turbo", limits=c(0, 100), breaks=c(0, 40, 60, 100), begin=0.3, end=1) + ggtitle("TSI 2008")
+l3 <- ggplot() + geom_raster(lwq_cropped$lwq_2012, mapping = aes(x=x, y=y, fill= lwq_2012)) + scale_fill_viridis(option="turbo", limits=c(0, 100), breaks=c(0, 40, 60, 100), begin=0.3, end=1) + ggtitle("TSI 2012")
+l4 <- ggplot() + geom_raster(lwq_cropped$lwq_2016, mapping = aes(x=x, y=y, fill= lwq_2016)) + scale_fill_viridis(option="turbo", limits=c(0, 100), breaks=c(0, 40, 60, 100), begin=0.3, end=1) + ggtitle("TSI 2016")
+l5 <- ggplot() + geom_raster(lwq_cropped$lwq_2020, mapping = aes(x=x, y=y, fill= lwq_2020)) + scale_fill_viridis(option="turbo", limits=c(0, 100), breaks=c(0, 40, 60, 100), begin=0.3, end=1) + ggtitle("TSI 2020")
 
-# oligotrophic (TSI 0–40, having the least amount of biological productivity, "good" water quality)
-# mesotrophic (TSI 40–60, having a moderate level of biological productivity, "fair" water quality)
-# eutrophic to hypereutrophic (TSI 60–100, having the highest amount of biological productivity, "poor" water quality)
-
-l1 <- ggplot() + geom_raster(lwq_cropped$lwq_2004, mapping = aes(x=x, y=y, fill= lwq_2004)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 1999")
-l2 <- ggplot() + geom_raster(lwq_cropped$lwq_2008, mapping = aes(x=x, y=y, fill= lwq_2008)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2009")
-l3 <- ggplot() + geom_raster(lwq_cropped$lwq_2012, mapping = aes(x=x, y=y, fill= lwq_2012)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2019")
-l4 <- ggplot() + geom_raster(lwq_cropped$lwq_2016, mapping = aes(x=x, y=y, fill= lwq_2016)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 1999")
-l5 <- ggplot() + geom_raster(lwq_cropped$lwq_2020, mapping = aes(x=x, y=y, fill= lwq_2020)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2009")
-
+# Let's plot the graphs all together!
 l1 + l2 + l3 + l4 + l5
+
+# plotting the TSI histograms all together 
+par(mfrow=c(2,3))
+hist(lwq_cropped$lwq_2004, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2004", xlab="TSI values")
+hist(lwq_cropped$lwq_2008, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2008", xlab="TSI values")
+hist(lwq_cropped$lwq_2012, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2012", xlab="TSI values")
+hist(lwq_cropped$lwq_2016, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2016", xlab="TSI values")
+hist(lwq_cropped$lwq_2020, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2020", xlab="TSI values")
+
+# saving the results!
+pdf("TSI plot", width=30, height=10)
+l1 + l2 + l3 + l4 + l5
+dev.off()
+
+pdf("TSI histograms")
+par(mfrow=c(2,3))
+hist(lwq_cropped$lwq_2004, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2004", xlab="TSI values")
+hist(lwq_cropped$lwq_2008, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2008", xlab="TSI values")
+hist(lwq_cropped$lwq_2012, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2012", xlab="TSI values")
+hist(lwq_cropped$lwq_2016, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2016", xlab="TSI values")
+hist(lwq_cropped$lwq_2020, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.04), main="TSI 2020", xlab="TSI values")
+dev.off()
+
+# -------- the end
+
+
+
+
+
+
+
+
