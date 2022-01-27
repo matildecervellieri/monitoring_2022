@@ -1,23 +1,27 @@
 # Ecological and environmental changes during the years in Italy: glaciers, forests and thropic state of lakes
-library(raster)
-library(ggplot2)
-library(RStoolbox)
-library(patchwork)
-library(viridis)
-library(ncdf4)
-library(gridExtra)
+
+library(raster) # main used package in remote sensing 
+library(ggplot2) # used to ggplot raster layers 
+library(RStoolbox) # used for Unsupervised classification 
+library(patchwork) # used to compose multiple ggplots 
+library(viridis) # used for the color scales
+library(ncdf4) # used to open neetCDF files 
+library(gridExtra) # used to arrange multiple grobs on a page
 
 # Set the working directory
 setwd("/Users/matildecervellieri/lab/exam/")
 
-# Prediction of the Alpine glacier retreat using albedo as an indicator of glacier presence
-# 3 albedo measurements were used for the years 1999, 2009 and 2009, taken from Copernicus Global Land Service
+
+# -------- part 1: prediction of the Alpine glacier retreat using albedo as an indicator of glacier presence
+# 6 albedo measurements were used for the years 1999, 2003, 2007, 2011, 2015 and 2019, taken from Copernicus Global Land Service
 # In particular, the detections were made in the period August-September: high albedo values indicate permanent snow and ice, thus avoiding the snow cover of the winter months 
 
 # importing dark-sky albedo files: first we make a list and then use the lapply function 
 albedo_list <- list.files(pattern="ALDH")
 albedo_list
 
+# using the function nc_open on a file it's possible to see all the layers/variable in the opened file. The one of our interest now is AL_DH_BB and can be selected using the function brick and specify the varname
+# nc_open("c_gls_ALDH_199909030000_GLOBE_VGT_V1.4.1.nc")
 albedo_import <- lapply(albedo_list, brick, varname="AL_DH_BB")
 albedo_import
 
@@ -26,7 +30,7 @@ albedo <- stack(albedo_import)
 albedo
 
 # Let's change their names
-names(albedo) <- c("albedo_1999", "albedo_2009", "albedo_2019")
+names(albedo) <- c("albedo_1999", "albedo_2003", "albedo_2007", "albedo_2011", "albedo_2015", "albedo_2019")
 names(albedo)
 albedo
 
@@ -37,16 +41,23 @@ albedo_cropped
 
 # Let's associate them to an object
 albedo1999 <- albedo_cropped$albedo_1999
-albedo2009 <- albedo_cropped$albedo_2009
+albedo2003 <- albedo_cropped$albedo_2003
+albedo2007 <- albedo_cropped$albedo_2007
+albedo2011 <- albedo_cropped$albedo_2011
+albedo2015 <- albedo_cropped$albedo_2015
 albedo2019 <- albedo_cropped$albedo_2019
 
 # let's plot them using cividis palette
 a1 <- ggplot() + geom_raster(albedo1999, mapping = aes(x=x, y=y, fill= albedo_1999)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 1999")
-a2 <- ggplot() + geom_raster(albedo2009, mapping = aes(x=x, y=y, fill= albedo_2009)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2009")
-a3 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2019")
+a2 <- ggplot() + geom_raster(albedo2003, mapping = aes(x=x, y=y, fill= albedo_2003)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2003")
+a3 <- ggplot() + geom_raster(albedo2007, mapping = aes(x=x, y=y, fill= albedo_2007)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2007")
+a4 <- ggplot() + geom_raster(albedo2011, mapping = aes(x=x, y=y, fill= albedo_2011)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2011")
+a5 <- ggplot() + geom_raster(albedo2015, mapping = aes(x=x, y=y, fill= albedo_2015)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2015")
+a6 <- ggplot() + geom_raster(albedo2019, mapping = aes(x=x, y=y, fill= albedo_2019)) + scale_fill_viridis(option="cividis", limits=c(0, 0.5)) + ggtitle("Alps's glaciers in 2019")
+
 
 # plotting them together to see the changes in the amount of ice and snow over the years: 1999 vs 2009 vs 2019
-a1 / a2 / a3
+a1 + a4 / a5 + a2 / a3 + a6
 
 # difference between 1999 and 2019 ice conditions
 adif <- albedo1999 - albedo2019
@@ -58,12 +69,12 @@ plot(adif, col=acl, main="difference between 1999 and 2019 ice conditions in the
 
 # Let's save the results 
 pdf("albedo.pdf")
-grid.arrange(a1, a2, a3, nrow=3)
+grid.arrange(a1, a2, a3, a4, a5, a6, ncol=2, nrow=3)
 dev.off()
 
 png("albedo.png", 
     width = 1500, height = 2000)
-grid.arrange(a1, a2, a3, nrow=3)
+grid.arrange(a1, a2, a3, a4, a5, a6, ncol=2, nrow=3))
 dev.off()
 
 png("_albedo_difference.png", 
@@ -80,7 +91,7 @@ fcover_list <- list.files(pattern="FCOVER")
 fcover_list
 
 fcover_import <- lapply(fcover_list, raster) # same as doing fcover_import <- lapply(fcover_list, brick, varname="FCOVER") because the first layer is FCOVER
-fcover_import # 3 files imported inside r
+fcover_import # 5 files imported inside r
 
 # stacking them all together
 fcover <- stack(fcover_import)
@@ -91,21 +102,28 @@ ext_italy <- c(6, 19.5, 36.5, 47)
 fcover_cropped <- crop(fcover, ext_italy)
 fcover_cropped
 
+# Let's assign them to an object
 fcover1999 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.1
-fcover2009 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.2
-fcover2019 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.3
+fcover2004 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.2
+fcover2009 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.3
+fcover2014 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.4
+fcover2019 <- fcover_cropped$Fraction.of.green.Vegetation.Cover.1km.5
 
 # First step: qualitative analysis 
-par(mfrow=c(1,3))
+par(mfrow=c(2,3))
 plot(fcover1999, main="Forest cover 1999")
+plot(fcover2004, main="Forest cover 2004")
 plot(fcover2009, main="Forest cover 2009")
+plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
 
 # Let's save the results 
 pdf("forest.pdf")
-par(mfrow=c(1,3))
+par(mfrow=c(2,3))
 plot(fcover1999, main="Forest cover 1999")
+plot(fcover2004, main="Forest cover 2004")
 plot(fcover2009, main="Forest cover 2009")
+plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
 dev.off()
 
