@@ -122,6 +122,30 @@ plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
 dev.off()
 
+# regressions between each year 
+par(mfrow=c(4,3))
+plot(fcover1999, fcover2004, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2004")
+abline(0,1, col="red")
+plot(fcover1999, fcover2009, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2009")
+abline(0,1, col="red")
+plot(fcover1999, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover1999, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2004, fcover2009, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2009")
+abline(0,1, col="red")
+plot(fcover2004, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover2004, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2009, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2009", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover2009, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2009", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2014, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2014", ylab="fcover 2019")
+abline(0,1, col="red")
+
+
 # Second step: let's make a quantative analysis in order to estimate the percentage of forest loss in 20 years (1999 vs 2019)
 # unsuperClass function: unsupervised classification. We don't explain to the software which is the forest and which the agricultural areas
 
