@@ -230,7 +230,7 @@ names(lwq)
 lwq
 
 # cropping the images: focusing on the Alps
-ext_alps_zoom <- c(8, 11.5, 45, 46.5)
+ext_alps_zoom <- c(8.2, 11.2, 45.4, 46.2)
 lwq_cropped <- crop(lwq, ext_alps_zoom)
 lwq_cropped
 
@@ -240,10 +240,10 @@ plot(lwq_cropped)
 # mesotrophic (TSI 40–60, having a moderate level of biological productivity, "fair" water quality)
 # eutrophic to hypereutrophic (TSI 60–100, having the highest amount of biological productivity, "poor" water quality)
 
-l1 <- ggplot() + geom_raster(lwq_cropped$lwq_2004, mapping = aes(x=x, y=y, fill= lwq_2004)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 1999")
-l2 <- ggplot() + geom_raster(lwq_cropped$lwq_2008, mapping = aes(x=x, y=y, fill= lwq_2008)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2009")
-l3 <- ggplot() + geom_raster(lwq_cropped$lwq_2012, mapping = aes(x=x, y=y, fill= lwq_2012)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2019")
-l4 <- ggplot() + geom_raster(lwq_cropped$lwq_2016, mapping = aes(x=x, y=y, fill= lwq_2016)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 1999")
-l5 <- ggplot() + geom_raster(lwq_cropped$lwq_2020, mapping = aes(x=x, y=y, fill= lwq_2020)) + scale_fill_viridis(option="plasma", limits=c(0, 100)) + ggtitle("Alps's glaciers in 2009")
+l1 <- ggplot() + geom_raster(lwq_cropped$lwq_2004, mapping = aes(x=x, y=y, fill= lwq_2004)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 1999")
+l2 <- ggplot() + geom_raster(lwq_cropped$lwq_2008, mapping = aes(x=x, y=y, fill= lwq_2008)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2009")
+l3 <- ggplot() + geom_raster(lwq_cropped$lwq_2012, mapping = aes(x=x, y=y, fill= lwq_2012)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2019")
+l4 <- ggplot() + geom_raster(lwq_cropped$lwq_2016, mapping = aes(x=x, y=y, fill= lwq_2016)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 1999")
+l5 <- ggplot() + geom_raster(lwq_cropped$lwq_2020, mapping = aes(x=x, y=y, fill= lwq_2020)) + scale_fill_viridis(option="viridis", limits=c(0, 100), breaks=c(0, 40, 60, 100), end=0.7) + ggtitle("Alps's glaciers in 2009")
 
 l1 + l2 + l3 + l4 + l5
