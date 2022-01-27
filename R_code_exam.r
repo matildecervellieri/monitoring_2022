@@ -130,21 +130,21 @@ fcover1999c <- unsuperClass(fcover1999, nClasses=2) # unsuperClass(x, nClasses)
 fcover1999c 
 
 plot(fcover1999c$map)
-# value 1 = agricultural areas and water in white
-# value 2 = forest in green
+# value 1 = forest in white
+# value 2 = agricultural areas and water in green
 
 # now I want to know the percentage of forest and the percentage of agricultural areas
 # the function freq is doing the job, it calculates the number of pixel of forest and agricultural areas
 freq(fcover1999c$map) 
-# agricultural areas and water (class 1) = 332321
-# forest (class 2) = 471887
+# forest (class 1) = 511418
+# agricultural areas and water (class 2) = 292790
 
 # let's make the proportion
-total1999 <- 471887 + 332321
-propagri1999 <- 332321 / total1999
-propforest1999 <- 471887 / total1999
-propagri1999 # 41% of agricoltural and water areas
-propforest1999 # 59% of forest
+total1999 <- 511418 + 292790
+propagri1999 <- 292790 / total1999
+propforest1999 <- 511418 / total1999
+propagri1999 # 36% of agricoltural and water areas
+propforest1999 # 64% of forest
 
 # build a dataframe
 cover <- c("Forest", "Agriculture") # we use quotes because is text  
@@ -162,18 +162,18 @@ fcover2019c <- unsuperClass(fcover2019, nClasses=2) # unsuperClass(x, nClasses)
 fcover2019c 
 
 plot(fcover2019c$map)
-# value 1 = forest in white
-# value 2 = agricultural areas and water in green 
+# value 1 = agricultural areas and water in white
+# value 2 = forest in green 
 
 # percentage of forest and the percentage of agricultural areas
 freq(fcover2019c$map) 
-# forest (class 1) = 437644
-# agricultural areas and water (class 2) = 366564
+# agricultural areas and water (class 1) = 341614
+# forest (class 2) = 462594
 
 # let's make the proportion
-total2019 <- 437644 + 366564
-propagri2019 <- 366564 / total2019
-propforest2019 <- 437644 / total2019
+total2019 <- 462594 + 341614
+propagri2019 <- 341614 / total2019
+propforest2019 <- 462594 / total2019
 propagri2019 # 46% of agricoltural and water areas
 propforest2019 # 54% of forest: -5% of forests
 
@@ -189,7 +189,7 @@ ggplot(proportion2019, aes(x=cover, y=prop2019, color=cover)) + geom_bar(stat="i
 
 # plotting the differences between 1999 conditions and 2019 contitions
 fdif <- fcover1999c$map - fcover2019c$map
-cl <- colorRampPalette(c("tan3", "yellow", "forest green"))(100)
+cl <- colorRampPalette(c("forest green", "yellow", "tan3"))(100)
 plot(fdif, col=cl, main="Difference between 1999 and 2019") # in this case: yellow parts are the area in which forest has been lost, while green indicates the continuos presence of forest and brown the unchanged agricultural zones
 # if the unsuperClass function gives different values to the forest and agricultural areas, the colour palette should be adjusted in order to point out changes
 
