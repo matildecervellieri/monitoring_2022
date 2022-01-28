@@ -226,8 +226,7 @@ dif_1999_2019
 names(dif_1999_2019) <- c("dif_1999_2019_")
 dif_1999_2019
 
-d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, 
-                                      mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
                                                                                                             midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
                                                                                                             name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
 d_1999_2019
