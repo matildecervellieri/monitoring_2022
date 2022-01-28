@@ -78,7 +78,7 @@ plot(adif, col=acl, main="difference between 1999 and 2019 ice conditions in the
 dev.off()
 
 
-# ---------- part 2: changes over the years in the Italian forest area using the Forest Cover data from Copernicus Global Land Service
+# ---------- part 2: changes over the years in the Italian forest area using the Fraction of Forest Cover data from Copernicus Global Land Service
 # ten years changes: 1999 vs 2009 vs 2019
 
 # importing the FCOVER data: first we make a list and then use the lapply function
@@ -111,6 +111,7 @@ plot(fcover2004, main="Forest cover 2004")
 plot(fcover2009, main="Forest cover 2009")
 plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
+# we can see the fraction of forest cover in the Italian area: 0 is the 0% of forest cover, while 1 stands for the 100% of forest cover 
 
 # Let's save the results 
 pdf("forest.pdf")
@@ -122,7 +123,8 @@ plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
 dev.off()
 
-# linear regressions between each year 
+# Let's compare the fcover between each year using a linear regression graph: if the values are above the red line there is a gain in fcover with time, while if the values are below the red line has occurred a forest loss
+# linear regressions between each year:
 par(mfrow=c(2,5))
 plot(fcover1999, fcover2004, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2004")
 abline(0,1, col="red")
@@ -145,7 +147,7 @@ abline(0,1, col="red")
 plot(fcover2014, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2014", ylab="fcover 2019")
 abline(0,1, col="red")
 
-# plotting the histogram of each year and all the linear reegression between them 
+# plotting the histogram of each year and all the linear regression between them 
 pairs(fcover_cropped)
 
 # Saving the result
@@ -175,6 +177,7 @@ dev.off()
 
 
 # Second step: let's make a quantative analysis in order to estimate the percentage of forest loss or gained every 5 years (1999 - 2004 - 2009 - 2014 - 2019)
+# We do this analysis because we espect a correlation between the quantitative analysis and the linear regressions we made before 
 # 1999 - 2004
 dif_1 <- -(fcover1999 - fcover2004)
 dif_1
@@ -218,6 +221,7 @@ d4 <- ggplot() + geom_raster(dif_4$dif4,
                                                                                          name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 2014 and 2019")
 
 d1 + d2 + d3 + d4
+# There is an actual correlation between the results in the plots and the ones in the regressions
 
 # Let's save the results!
 pdf("percentage_forest_loss_gain_every5years")
