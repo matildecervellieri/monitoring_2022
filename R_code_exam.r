@@ -196,27 +196,12 @@ dif_4
 names(dif_4) <- c("dif4")
 dif_4
 
-d1 <- ggplot() + geom_raster(dif_1$dif1, mapping = aes(x=x, y=y, fill= dif1)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
-                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
-                           name = "% of forest loss or gain")
-    + ggtitle("% of forest loss or gain between 1999 and 2004")
+d1 <- ggplot() + geom_raster(dif_1$dif1, mapping = aes(x=x, y=y, fill= dif1)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2004")
 
-d2 <- ggplot() + geom_raster(dif_2$dif2, mapping = aes(x=x, y=y, fill= dif2))
-    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
-                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
-                           name = "% of forest loss or gain")
-    + ggtitle("% of forest loss or gain between 2004 and 2009")
+d2 <- ggplot() + geom_raster(dif_2$dif2, mapping = aes(x=x, y=y, fill= dif2)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 2004 and 2009")
 
-d3 <- ggplot() + geom_raster(dif_3$dif3, mapping = aes(x=x, y=y, fill= dif3))
-    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
-                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
-                           name = "% of forest loss or gain")
-    + ggtitle("% of forest loss or gain between 2009 and 2014")
-d4 <- ggplot() + geom_raster(dif_4$dif4, mapping = aes(x=x, y=y, fill= dif4))
-    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
-                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
-                           name = "% of forest loss or gain")
-    + ggtitle("% of forest loss or gain between 2014 and 2019")
+d3 <- ggplot() + geom_raster(dif_3$dif3, mapping = aes(x=x, y=y, fill= dif3)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 2009 and 2014")
+d4 <- ggplot() + geom_raster(dif_4$dif4, mapping = aes(x=x, y=y, fill= dif4)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 2014 and 2019")
 
 d1 + d2 + d3 + d4
 
@@ -226,9 +211,7 @@ dif_1999_2019
 names(dif_1999_2019) <- c("dif_1999_2019_")
 dif_1999_2019
 
-d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
-                                                                                                            midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
-                                                                                                            name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
+d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
 d_1999_2019
 
 
@@ -298,11 +281,3 @@ hist(lwq_cropped$lwq_2020, breaks=c(0, 40, 60, 100), xlim=c(0,100), ylim=c(0, 0.
 dev.off()
 
 # -------- the end
-
-
-
-
-
-
-
-
