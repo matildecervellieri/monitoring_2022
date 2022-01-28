@@ -122,8 +122,8 @@ plot(fcover2014, main="Forest cover 2014")
 plot(fcover2019, main="Forest cover 2019")
 dev.off()
 
-# regressions between each year 
-par(mfrow=c(4,3))
+# linear regressions between each year 
+par(mfrow=c(2,5))
 plot(fcover1999, fcover2004, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2004")
 abline(0,1, col="red")
 plot(fcover1999, fcover2009, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2009")
@@ -145,93 +145,92 @@ abline(0,1, col="red")
 plot(fcover2014, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2014", ylab="fcover 2019")
 abline(0,1, col="red")
 
+# plotting the histogram of each year and all the linear reegression between them 
+pairs(fcover_cropped)
 
-# Second step: let's make a quantative analysis in order to estimate the percentage of forest loss in 20 years (1999 vs 2019)
-# unsuperClass function: unsupervised classification. We don't explain to the software which is the forest and which the agricultural areas
-
-####### 1999 #######
-fcover1999c <- unsuperClass(fcover1999, nClasses=2) # unsuperClass(x, nClasses)
-fcover1999c 
-
-plot(fcover1999c$map)
-# value 1 = forest in white
-# value 2 = agricultural areas and water in green
-
-# now I want to know the percentage of forest and the percentage of agricultural areas
-# the function freq is doing the job, it calculates the number of pixel of forest and agricultural areas
-freq(fcover1999c$map) 
-# forest (class 1) = 511418
-# agricultural areas and water (class 2) = 292790
-
-# let's make the proportion
-total1999 <- 511418 + 292790
-propagri1999 <- 292790 / total1999
-propforest1999 <- 511418 / total1999
-propagri1999 # 36% of agricoltural and water areas
-propforest1999 # 64% of forest
-
-# build a dataframe
-cover <- c("Forest", "Agriculture") # we use quotes because is text  
-prop1999 <- c(propforest1999, propagri1999)
-
-proportion1999 <- data.frame(cover, prop1999)
-proportion1999 # this are the real proportion of forest and agriculture: quantitative values 
-
-# we are gonna use the ggplot function: histograms
-ggplot(proportion1999, aes(x=cover, y=prop1999, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 1999")
-
-
-####### 2019 #######
-fcover2019c <- unsuperClass(fcover2019, nClasses=2) # unsuperClass(x, nClasses)
-fcover2019c 
-
-plot(fcover2019c$map)
-# value 1 = agricultural areas and water in white
-# value 2 = forest in green 
-
-# percentage of forest and the percentage of agricultural areas
-freq(fcover2019c$map) 
-# agricultural areas and water (class 1) = 341614
-# forest (class 2) = 462594
-
-# let's make the proportion
-total2019 <- 462594 + 341614
-propagri2019 <- 341614 / total2019
-propforest2019 <- 462594 / total2019
-propagri2019 # 46% of agricoltural and water areas
-propforest2019 # 54% of forest: -5% of forests
-
-# build a dataframe
-cover <- c("Forest", "Agriculture") # we use quotes because is text  
-prop2019 <- c(propforest2019, propagri2019)
-
-proportion2019 <- data.frame(cover, prop2019)
-proportion2019 # this are the real proportion of forest and agriculture: quantitative values 
-
-# we are gonna use the ggplot function. We want to use histograms 
-ggplot(proportion2019, aes(x=cover, y=prop2019, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 2019")
-
-# plotting the differences between 1999 conditions and 2019 contitions
-fdif <- fcover1999c$map - fcover2019c$map
-cl <- colorRampPalette(c("forest green", "yellow", "tan3"))(100)
-plot(fdif, col=cl, main="Difference between 1999 and 2019") # in this case: yellow parts are the area in which forest has been lost, while green indicates the continuos presence of forest and brown the unchanged agricultural zones
-# if the unsuperClass function gives different values to the forest and agricultural areas, the colour palette should be adjusted in order to point out changes
-
-# plotting them all together
-pdf("quantitative forest difference map.pdf")
-par(mfrow=c(1,3))
-plot(fcover1999c$map, main="Forest vs agriculture 1999")
-plot(fcover2019c$map, main="Forest vs agriculture 2019")
-plot(fdif, col=cl, main="Difference between 1999 and 2019")
+# Saving the result
+pdf("regressions", width=30, height=10)
+par(mfrow=c(2,5))
+plot(fcover1999, fcover2004, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2004")
+abline(0,1, col="red")
+plot(fcover1999, fcover2009, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2009")
+abline(0,1, col="red")
+plot(fcover1999, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover1999, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 1999", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2004, fcover2009, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2009")
+abline(0,1, col="red")
+plot(fcover2004, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover2004, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2004", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2009, fcover2014, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2009", ylab="fcover 2014")
+abline(0,1, col="red")
+plot(fcover2009, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2009", ylab="fcover 2019")
+abline(0,1, col="red")
+plot(fcover2014, fcover2019, xlim=c(0, 1), ylim=c(0, 1), xlab="fcover 2014", ylab="fcover 2019")
+abline(0,1, col="red")
 dev.off()
 
-g1 <- ggplot(proportion1999, aes(x=cover, y=prop1999, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 1999")
-g2 <- ggplot(proportion2019, aes(x=cover, y=prop2019, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1) + ggtitle("Proportion of 2019")
-g1 + g2 # loss of 5% of forests
 
-pdf("quantitative forest difference graph.pdf")
-g1 + g2
-dev.off()
+# Second step: let's make a quantative analysis in order to estimate the percentage of forest loss or gained every 5 years (1999 - 2004 - 2009 - 2014 - 2019)
+# 1999 - 2004
+dif_1 <- -(fcover1999 - fcover2004)
+dif_1
+names(dif_1) <- c("dif1")
+dif_1
+# 2004 - 2009
+dif_2 <- -(fcover2004 - fcover2009)
+dif_2
+names(dif_2) <- c("dif2")
+dif_2
+# 2009 - 2014
+dif_3 <- -(fcover2009 - fcover2014)
+dif_3
+names(dif_3) <- c("dif3")
+dif_3
+# 2014 - 2019
+dif_4 <- -(fcover2014 - fcover2019)
+dif_4
+names(dif_4) <- c("dif4")
+dif_4
+
+d1 <- ggplot() + geom_raster(dif_1$dif1, mapping = aes(x=x, y=y, fill= dif1)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                           name = "% of forest loss or gain")
+    + ggtitle("% of forest loss or gain between 1999 and 2004")
+
+d2 <- ggplot() + geom_raster(dif_2$dif2, mapping = aes(x=x, y=y, fill= dif2))
+    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                           name = "% of forest loss or gain")
+    + ggtitle("% of forest loss or gain between 2004 and 2009")
+
+d3 <- ggplot() + geom_raster(dif_3$dif3, mapping = aes(x=x, y=y, fill= dif3))
+    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                           name = "% of forest loss or gain")
+    + ggtitle("% of forest loss or gain between 2009 and 2014")
+d4 <- ggplot() + geom_raster(dif_4$dif4, mapping = aes(x=x, y=y, fill= dif4))
+    + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, 
+                           limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                           name = "% of forest loss or gain")
+    + ggtitle("% of forest loss or gain between 2014 and 2019")
+
+d1 + d2 + d3 + d4
+
+# Third step: let's make a quantative analysis in order to estimate the percentage of forest loss or gained in 20 years (1999 vs 2019)
+dif_1999_2019 <- -(fcover1999 - fcover2019)
+dif_1999_2019
+names(dif_1999_2019) <- c("dif_1999_2019_")
+dif_1999_2019
+
+d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, 
+                                      mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+                                                                                                            midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                                                                                                            name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
+d_1999_2019
 
 
 # ------------ part 3: changes during the years in the thropic state index (layer of Lake Water Quality dataset from Copernicus Global Land Service) of Northern Italy lakes 
