@@ -79,7 +79,7 @@ dev.off()
 
 
 # ---------- part 2: changes over the years in the Italian forest area using the Fraction of Forest Cover data from Copernicus Global Land Service
-# ten years changes: 1999 vs 2009 vs 2019
+# five years changes: 1999 vs 2004 vs 2009 vs 2014 vs 2019
 
 # importing the FCOVER data: first we make a list and then use the lapply function
 fcover_list <- list.files(pattern="FCOVER")
@@ -177,7 +177,7 @@ dev.off()
 
 
 # Second step: let's make a quantative analysis in order to estimate the percentage of forest loss or gained every 5 years (1999 - 2004 - 2009 - 2014 - 2019)
-# We do this analysis because we espect a correlation between the quantitative analysis and the linear regressions we made before 
+# We do this analysis because we expect a correlation between the quantitative analysis and the linear regressions we made before 
 # 1999 - 2004
 dif_1 <- -(fcover1999 - fcover2004)
 dif_1
@@ -199,6 +199,7 @@ dif_4
 names(dif_4) <- c("dif4")
 dif_4
 
+# Let's plot the differences between years in order to evaluate the percentage of forest loss or gain
 d1 <- ggplot() + geom_raster(dif_1$dif1, 
                              mapping = aes(x=x, y=y, fill= dif1)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
                                                                                          midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), 
@@ -234,7 +235,12 @@ dif_1999_2019
 names(dif_1999_2019) <- c("dif_1999_2019_")
 dif_1999_2019
 
-d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
+d_1999_2019 <- ggplot() + geom_raster(dif_1999_2019$dif_1999_2019_, 
+                                      mapping = aes(x=x, y=y, fill= dif_1999_2019_)) + scale_fill_gradient2(low = "blue", mid = "white", high = "red", 
+                                                                                                            midpoint = 0, limits=c(-0.8, 0.8), breaks=c(-0.8, -0.4, 0, 0.4, 0.8), 
+                                                                                                            labels=c("- 80%",  "- 40%", "0%", "+ 40%", "+ 80%"), 
+                                                                                                            name = "% of forest loss or gain") + ggtitle("% of forest loss or gain between 1999 and 2019")
+
 d_1999_2019
      
 # Let's save the results!
