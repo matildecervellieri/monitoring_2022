@@ -176,7 +176,7 @@ abline(0,1, col="red")
 dev.off()
 
 
-# Second step: let's make a quantative analysis in order to estimate the percentage of forest loss or gained every 5 years (1999 - 2004 - 2009 - 2014 - 2019)
+# Second step: let's make a quantitative analysis in order to estimate the percentage of forest loss or gained every 5 years (1999 - 2004 - 2009 - 2014 - 2019)
 # We do this analysis because we expect a correlation between the quantitative analysis and the linear regressions we made before 
 # 1999 - 2004
 dif_1 <- -(fcover1999 - fcover2004)
@@ -229,7 +229,7 @@ pdf("percentage_forest_loss_gain_every5years")
 grid.arrange(d1, d2. d3, d4, nrow=2, ncol=2)
 dev,off()
 
-# Third step: let's make a quantative analysis in order to estimate the percentage of forest loss or gain in 20 years (1999 vs 2019)
+# Third step: let's make a quantitative analysis in order to estimate the percentage of forest loss or gain in 20 years (1999 vs 2019)
 dif_1999_2019 <- -(fcover1999 - fcover2019)
 dif_1999_2019
 names(dif_1999_2019) <- c("dif_1999_2019_")
