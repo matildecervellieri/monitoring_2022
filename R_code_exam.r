@@ -2,7 +2,7 @@
 
 library(raster) # main used package in remote sensing 
 library(ggplot2) # used to ggplot raster layers 
-library(RStoolbox) # used for Unsupervised classification 
+# library(RStoolbox) # used for Unsupervised classification 
 library(patchwork) # used to compose multiple ggplots 
 library(viridis) # used for the color scales
 library(ncdf4) # used to open neetCDF files 
